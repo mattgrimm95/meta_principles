@@ -125,6 +125,20 @@ projects. When a principle here and a skill disagree, fix both.
   sense — don't reimplement crypto, parsing, etc.
 - **Bias to recent versions.** When versions conflict, prioritize updating the
   libraries most essential to the app (language runtime, core domain library).
+- **Unblock a failing `pip install` by suspecting *config*, not the package.** A
+  `CERTIFICATE_VERIFY_FAILED` (or a hang/timeout) on install is almost never the
+  package or a PyPI outage — it's a **local index/proxy misconfiguration**: a
+  custom/extra index (a corporate or `pypi.ngc.nvidia.com`-style mirror) whose
+  cert won't verify, a TLS-intercepting proxy/sandbox, or a stale CA bundle. One
+  bad `extra-index-url` line can poison *every* install, including from PyPI.
+  **Diagnose:** `pip config list` + the `PIP_*` / `*_PROXY` / `*_CA_BUNDLE` env
+  vars, and prove the network itself is fine with a plain `urllib`/`curl` HTTPS
+  GET to `pypi.org` (works in plain Python but not pip ⇒ it's pip's config, not
+  the network). **Fix:** pin the real index and trust its hosts — `pip install
+  --index-url https://pypi.org/simple/ --trusted-host pypi.org --trusted-host
+  files.pythonhosted.org <pkg>` — then repair the offending `pip.ini`/`pip.conf`
+  so it doesn't recur. *Why:* the package and PyPI are the least-likely culprits;
+  start at the local config that sits between you and a known-good index.
 
 ## 5. Security, secrets & privacy
 
