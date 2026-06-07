@@ -78,6 +78,18 @@ projects. When a principle here and a skill disagree, fix both.
 - **Swappable-backend promotion path.** Make reversible choices (especially
   dependency choices) reversible *by design*.
 - **Design for API, CLI, and containerization** from the start.
+- **Simplest tool first; escalate automation only when forced** (progressive
+  enhancement; "do the simplest thing that could possibly work" — Beck). Reach
+  for the lowest-power, most-deterministic mechanism that solves the problem, and
+  add automation/intelligence only when the simpler level genuinely can't. For
+  pulling data off a website the ladder is: **(1) an official API** (stable,
+  contractual) → **(2) a deterministic Python scraper** (stdlib HTTP + parsing,
+  fixture-tested) → **(3) an LLM that crawls to *find* the data and logs what it
+  found** (a link rule / URL pattern / selector) so a future deterministic
+  scraper pulls it consistently with no LLM in the loop. Each rung is the
+  fallback for the rung above; the LLM's job is to *retire itself* by producing a
+  locator a cheaper, deterministic layer can reuse (see §10's
+  LLM-as-logged-proposer pattern).
 
 ## 3. Source of truth, derived artifacts & determinism
 
