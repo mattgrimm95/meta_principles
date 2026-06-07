@@ -222,6 +222,15 @@ projects. When a principle here and a skill disagree, fix both.
 - **No genuinely destructive action without an explicit, clear human prompt** —
   no force-push, `rm -rf`, or DB drops, even to save time. On any ambiguity or
   unresolved blocker, STOP and ask rather than improvise.
+- **Question feasibility after repeated failure — don't troubleshoot the
+  impossible.** If a task keeps failing after a healthy number of genuine
+  attempts, step back and challenge the *premise* before investing more: does the
+  target exist, is it reachable, is it even permitted? Confirm the *what* before
+  grinding on the *how*. *Why:* the sunk-cost reflex keeps you debugging "why
+  won't this work" long after the real answer is "it can't," and a wrong premise
+  is immune to better technique. (Concrete: effort went into troubleshooting
+  access to a `.mil` host that wasn't reachable on the open internet, when the
+  data actually lived on a different, working host.)
 
 ## 10. Working with Claude (LLM-using projects)
 
