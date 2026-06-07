@@ -78,6 +78,14 @@ projects. When a principle here and a skill disagree, fix both.
 - **Swappable-backend promotion path.** Make reversible choices (especially
   dependency choices) reversible *by design*.
 - **Design for API, CLI, and containerization** from the start.
+- **No hard-coded paths or magic values — centralize them behind a name.** Don't
+  scatter absolute paths, hosts, or literals through the code; resolve each once
+  from a config module / constant / environment variable / CLI argument, and have
+  the rest of the code reference that *alias*. *Why:* a value named once is
+  portable (no `C:\Users\me\…` that breaks on another machine — or leaks a
+  username), changed in one place, and testable — the DRY / single-source-of-truth
+  rule (Hunt & Thomas, *The Pragmatic Programmer*). Guard the most concrete case
+  with a committed test that fails on machine-specific user-home paths.
 - **Simplest tool first; escalate automation only when forced** (progressive
   enhancement; "do the simplest thing that could possibly work" — Beck). Reach
   for the lowest-power, most-deterministic mechanism that solves the problem, and
